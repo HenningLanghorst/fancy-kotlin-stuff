@@ -15,15 +15,11 @@ class DbTest {
 
     @Before
     fun setUp() {
-        dataSource = createDataSource();
-    }
-
-    private fun createDataSource(): JdbcDataSource {
-        val ds = JdbcDataSource()
-        ds.setURL("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:create.sql'\\;RUNSCRIPT FROM 'classpath:data.sql'")
-        ds.user = "sa"
-        ds.password = "sa"
-        return ds
+        dataSource = JdbcDataSource().apply {
+            setUrl("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:create.sql'\\;RUNSCRIPT FROM 'classpath:data.sql'")
+            user = "sa"
+            password = "sa"
+        }
     }
 
     @Test
