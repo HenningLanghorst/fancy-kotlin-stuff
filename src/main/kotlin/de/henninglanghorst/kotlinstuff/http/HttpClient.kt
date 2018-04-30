@@ -7,9 +7,13 @@ import java.net.URL
 fun json(id: Int, name: String) = """{"id": $id, "name": "$name"}"""
 
 fun httpRequest(url: String, setup: ConnectionContext.() -> Unit) =
-        HttpURLConnectionContext(URL(url).openConnection() as HttpURLConnection)
+        URL(url).connectionContext
+                .withLogging
                 .apply(setup)
                 .httpResponse
+
+private val URL.connectionContext: ConnectionContext
+    get() = HttpURLConnectionContext(openConnection() as HttpURLConnection)
 
 interface ConnectionContext {
     val headers: Headers
@@ -22,4 +26,3 @@ interface ConnectionContext {
 interface Headers {
     operator fun set(key: String, value: String)
 }
-
