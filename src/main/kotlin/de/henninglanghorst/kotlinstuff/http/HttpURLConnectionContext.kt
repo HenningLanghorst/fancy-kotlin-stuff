@@ -20,7 +20,7 @@ class HttpURLConnectionContext(private val connection: HttpURLConnection) : Conn
             with(connection) {
                 doOutput = requestMethod != "GET" && value.isNotEmpty()
                 if (doOutput) {
-                    outputStream.writeString(value)
+                    outputStream write value
                 }
             }
         }
@@ -52,7 +52,7 @@ private class JavaProperty<T>(private val get: () -> T, private val set: (T) -> 
 }
 
 
-private fun OutputStream.writeString(value: String) {
+private infix fun OutputStream.write(value: String) {
     PrintStream(this).use {
         it.println(value)
         it.flush()
