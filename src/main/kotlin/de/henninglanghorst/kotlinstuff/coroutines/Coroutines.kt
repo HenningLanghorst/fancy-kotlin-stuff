@@ -1,9 +1,9 @@
 package de.henninglanghorst.kotlinstuff.coroutines
 
 
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayInputStream
 import java.io.IOException
@@ -47,7 +47,7 @@ fun main(args: Array<String>) {
 
 private fun json(id: Int, name: String) = """{"id": $id, "name": "$name"}"""
 
-private fun httpRequestAsync(url: String, setup: HttpURLConnection.() -> Unit) = async(CommonPool) { httpRequest(url, setup) }
+private fun httpRequestAsync(url: String, setup: HttpURLConnection.() -> Unit) = GlobalScope.async { httpRequest(url, setup) }
 
 private fun httpRequest(url: String, setup: HttpURLConnection.() -> Unit): String {
     return URL(url).openConnection()
