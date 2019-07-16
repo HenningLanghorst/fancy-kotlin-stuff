@@ -1,8 +1,8 @@
 package de.henninglanghorst.kotlinstuff.db
 
 import org.h2.jdbcx.JdbcDataSource
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.Month
 import javax.sql.DataSource
@@ -13,7 +13,7 @@ class DbTest {
 
     var dataSource: DataSource? = null
 
-    @Before
+    @BeforeEach
     fun setUp() {
         dataSource = JdbcDataSource().apply {
             setUrl("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:create.sql'\\;RUNSCRIPT FROM 'classpath:data.sql'")

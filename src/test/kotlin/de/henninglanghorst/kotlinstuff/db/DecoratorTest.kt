@@ -1,18 +1,15 @@
 package de.henninglanghorst.kotlinstuff.db
 
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
-import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.jupiter.MockitoExtension
 import java.sql.Connection
 
+@ExtendWith(MockitoExtension::class)
 class DecoratorTest {
-
-    @Rule
-    @JvmField
-    val mockitoRule = MockitoJUnit.rule()
 
     @Mock
     private lateinit var connection: Connection
@@ -22,7 +19,7 @@ class DecoratorTest {
         // given
         val nonCommittingConnection = NonCommittingConnection(connection)
         // when
-        nonCommittingConnection.commit();
+        nonCommittingConnection.commit()
         // then
         verify(connection, never()).commit()
     }
@@ -32,6 +29,6 @@ class DecoratorTest {
 class NonCommittingConnection(val delegate: Connection) : Connection by delegate {
 
     override fun commit() {
-        println("Commit suppressed");
+        println("Commit suppressed")
     }
 }
